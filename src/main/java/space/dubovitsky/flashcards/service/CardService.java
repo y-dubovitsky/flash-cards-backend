@@ -31,6 +31,11 @@ public class CardService {
     }
 
     public void delete(long id) {
-        this.cardRepository.delete(CardBuilder.withId(id));
+        this.cardRepository.delete(CardBuilder.create().withId(id).build());
+    }
+
+    public Card findByFront(String front) {
+        Card byFront = this.cardRepository.findByFront(front);
+        return byFront;
     }
 }

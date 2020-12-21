@@ -7,14 +7,39 @@ import space.dubovitsky.flashcards.model.Card;
  */
 public class CardBuilder {
 
-    private static Card build() {
-        return new Card();
+    private static CardBuilder instance = new CardBuilder();
+    private Long id = null;
+    private String front = "";
+    private String back = "";
+
+    private CardBuilder() {
     }
 
-    public static Card withId(long id) {
-        Card build = build();
-        build.setId(id);
-        return build;
+    public static CardBuilder create() {
+        return instance;
+    }
+
+    public CardBuilder withId(long id) {
+        this.id = id;
+        return instance;
+    }
+
+    public CardBuilder withFrond(String front) {
+        this.front = front;
+        return instance;
+    }
+
+    public CardBuilder withBack(String front) {
+        this.back = back;
+        return instance;
+    }
+
+    public Card build() {
+        Card card = new Card(front, back); //TODO Можно ли так? В Конструкторе написано что не blank
+        if (this.id != null) {
+            card.setId(id);
+        }
+        return card;
     }
 
 }
