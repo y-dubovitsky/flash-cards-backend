@@ -27,10 +27,17 @@ public class CardService {
         this.cardRepository = cardRepository;
     }
 
+    /**
+     * SEarch all cards
+     * @return
+     */
     public List<Card> findAll() {
         return cardRepository.findAll();
     }
 
+    /**
+     * Search flashCard by id
+     */
     public Card findById(long id) throws Exception{
         Optional<Card> byId = cardRepository.findById(id);
         return byId.orElseThrow(Exception::new); // TODO ?
@@ -40,21 +47,33 @@ public class CardService {
         this.cardRepository.save(card);
     }
 
-    public void delete(long id) {
+    /**
+     * Delete flashCard by id
+     * @param id - id
+     */
+    public void delete(Long id) { //TODO Переписать
         this.cardRepository.delete(CardBuilder.create().withId(id).build());
     }
 
+    /**
+     * Search card by front side
+     * @param front
+     * @return
+     */
     public Card findByFront(String front) {
         Card byFront = this.cardRepository.findByFront(front);
         return byFront;
     }
 
+    /**
+     * Create new flashCard
+     */
     public void add(Card card) {
         this.cardRepository.save(card);
     }
 
     /**
-     * Создает коллекцию Карточек из входного файла
+     * Creates a collection of Cards from an input file
      * @param file
      * @return
      * @throws IOException

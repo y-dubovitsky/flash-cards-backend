@@ -39,15 +39,17 @@ public class CardController {
             cardService.createCardsFromTextFile(file);
             return "redirect:/card/all";
         }
-        Card card = new Card(front, back);
+        Card card = new Card(front, back); //TODO Добавить в модель количество или сами созданные карточки?
         cardService.save(card);
 
         return "redirect:/card/all";
     }
 
-    @DeleteMapping("/id/{id}")
-    public void delete(@PathVariable Long id) {
+    @DeleteMapping()
+    public String delete(@RequestParam Long id) {
         cardService.delete(id);
+
+        return "cards";
     }
 
 

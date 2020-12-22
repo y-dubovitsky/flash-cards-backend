@@ -126,13 +126,13 @@
                             <a class="nav-link fa fa-check-square-o" href="#"></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fa fa-pencil-square-o" href="#" tabindex="-1" aria-disabled="true"></a>
+                            <a onclick="console.log('Wow, wow...')" class="nav-link fa fa-pencil-square-o" href="#" tabindex="-1" aria-disabled="true"></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fa fa-question-circle" href="#" tabindex="-1" aria-disabled="true"></a>
+                            <a onclick="aliveFunc()" class="nav-link fa fa-question-circle" href="#" tabindex="-1" aria-disabled="true"></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fa fa-trash-o" tabindex="-1" aria-disabled="true"></a>
+                            <a onclick="deleteRequest(${card.id})" class="nav-link fa fa-trash-o" tabindex="-1" aria-disabled="true"></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fa fa-star" aria-hidden="true" href="#" tabindex="-1"
@@ -185,17 +185,27 @@
     <#------------------------------------------ Page Content ------------------------------------------>
 
 </div>
-<script src="/static/js/jquery.min.js"></script>
+<#--You are using slim version of jQuery. It Doesn't support ajax Calling. Use-->
+<#--<script src="/static/js/jquery.min.js"></script>-->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="/static/js/popper.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/main.js"></script>
 <script>
-    var myModal = document.getElementById('myModal');
-    var myInput = document.getElementById('myInput');
+    function deleteRequest(id)
+    {
+        $.ajax({
+            url: 'http://localhost:8080/card',
+            method: 'delete',
+            data: {
+                id: id
+            }
+        });
+    }
 
-    myModal.addEventListener('shown.bs.modal', function () {
-        myInput.focus()
-    })
+    function aliveFunc() {
+        alert("Its alive!");
+    }
 </script>
 </body>
 </html>
