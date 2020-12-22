@@ -1,5 +1,6 @@
 package space.dubovitsky.flashcards.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,12 @@ public class Card {
 //        this.front = front;
 //        this.back = back;
 //    }
+
+    private String prompt;
+
+    private String imgPath;
+
+    private Boolean learned;
 
 
     public Card(String front, String back) {

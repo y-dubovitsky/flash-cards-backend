@@ -2,11 +2,12 @@ package space.dubovitsky.flashcards.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import space.dubovitsky.flashcards.model.Card;
 import space.dubovitsky.flashcards.service.CardService;
 
+import java.io.*;
 import java.util.List;
 
 @Controller
@@ -27,11 +28,27 @@ public class CardController {
         return "cards";
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        List<Card> all = cardService.findAll();
+    @PostMapping("/add")
+    public String addFromFile(
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            @RequestParam(required = false) String front,
+            @RequestParam(required = false) String back,
+            Model model
+    ) throws IOException {
+        if (!file.isEmpty()) {
+            cardService.createCardsFromTextFile(file);
+            return "redirect:/card/all";
+        }
+        Card card = new Card(front, back);
+        cardService.save(card);
 
-        model.addAttribute("cards", all);
-        return "login";
+        return "redirect:/card/all";
     }
+
+    @DeleteMapping("/id/{id}")
+    public void delete(@PathVariable Long id) {
+        cardService.delete(id);
+    }
+
+
 }

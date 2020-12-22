@@ -107,7 +107,7 @@
 
     <footer>
         <p>
-            made by: <a href="#" target="_blank">Dubovitsky with love</a>
+            made by: <a href="#" target="_blank">Dubovitsky with <i class="icon-heart"></i></a>
         </p>
     </footer>
 
