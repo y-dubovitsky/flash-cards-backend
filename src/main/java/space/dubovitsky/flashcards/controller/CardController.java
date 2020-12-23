@@ -20,6 +20,9 @@ public class CardController {
         this.cardService = cardService;
     }
 
+    /**
+     * Return all flashCards
+     */
     @GetMapping("/all")
     public String findAll(Model model) {
         List<Card> all = cardService.findAll();
@@ -28,29 +31,47 @@ public class CardController {
         return "cards";
     }
 
-    @PostMapping("/add")
-    public String addFromFile(
-            @RequestParam(value = "file", required = false) MultipartFile file,
+    /**
+     * Create card from input data
+     */
+    @PostMapping("/text")
+    public String addFromTextInput(
             @RequestParam(required = false) String front,
             @RequestParam(required = false) String back,
+            Model model
+    ) {
+        Card card = new Card(front, back); //TODO Добавить в модель количество или сами созданные карточки?
+        cardService.save(card);
+
+        this.findAll(model); //TODO Нужно поправить? Потому что он всю страницу перезагружает, а нужно только добавить 1 элемент
+        return "parts/flash-cards";
+    }
+
+    /**
+     * Create List of flasCards from input file.
+     */
+    @PostMapping("/file")
+    public String addFromFile(
+            @RequestParam(value = "file", required = false) MultipartFile file,
             Model model
     ) throws IOException {
         if (!file.isEmpty()) {
             cardService.createCardsFromTextFile(file);
-            return "redirect:/card/all";
+            return "cards";
         }
-        Card card = new Card(front, back); //TODO Добавить в модель количество или сами созданные карточки?
-        cardService.save(card);
 
-        return "redirect:/card/all";
-    }
-
-    @DeleteMapping()
-    public String delete(@RequestParam Long id) {
-        cardService.delete(id);
-
+        model.addAttribute("cards", "File is empty, sorry"); //TODO Если файл пустой
         return "cards";
     }
 
+    /**
+     * Delete flash card by Id.
+     */
+    @DeleteMapping()
+    public String delete(@RequestParam Long id, Model model) {
+        cardService.delete(id);
 
+        this.findAll(model);
+        return "parts/flash-cards";
+    }
 }

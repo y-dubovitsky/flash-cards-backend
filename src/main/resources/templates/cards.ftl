@@ -73,7 +73,14 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="/card/add" method="post" enctype="multipart/form-data">
+                            <form
+                                    action="javascript:addCardTextInputRequest(
+                                            $('input[name=front]').val(),
+                                            $('input[name=back]').val()
+                                    );"
+                                    method="post"
+                                    enctype="multipart/form-data"
+                            >
                                 <div class="modal-body">
                                     <input type="file" name="file">
                                     <input type="text" name="front" placeholder="front side">
@@ -81,7 +88,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success">Create</button>
+                                    <button id="createBtn" type="submit" class="btn btn-success">Create</button>
                                 </div>
                             </form>
                         </div>
@@ -118,70 +125,9 @@
 
         <#------------------------------------------ Flash Card ------------------------------------------>
 
-        <#if cards?has_content>
-            <#list cards as card>
-                <div class="card text-center mt-2 mb-2">
-                    <div class="card-header">
-                        <ul class="nav nav-pills card-header-pills">
-                            <li class="nav-item">
-                                <a class="nav-link fa fa-check-square-o" href="#"></a>
-                            </li>
-                            <li class="nav-item">
-                                <a onclick="console.log('Wow, wow...')" class="nav-link fa fa-pencil-square-o" href="#"
-                                   tabindex="-1" aria-disabled="true"></a>
-                            </li>
-                            <li class="nav-item">
-                                <a onclick="aliveFunc()" class="nav-link fa fa-question-circle" href="#" tabindex="-1"
-                                   aria-disabled="true"></a>
-                            </li>
-                            <li class="nav-item">
-                                <a onclick="deleteRequest(${card.id})" class="nav-link fa fa-trash-o" tabindex="-1"
-                                   aria-disabled="true"></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fa fa-star" aria-hidden="true" href="#" tabindex="-1"
-                                   aria-disabled="true"></a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="card-title m-5">${card.front}</h2>
-                        <#--                Prompt-->
-                        <div class="collapse" id="collapseExample">
-                            <div class="card card-body">
-                                <#if card.prompt??>
-                                    <p class="card-text">${card.prompt}</p>
-                                <#else>
-                                    <p class="card-text">Ooops, no prompt</p>
-                                </#if>
-                            </div>
-                        </div>
-                        <#--                Prompt-->
-                        <button type="button" class="btn btn-success">Know</button>
-                        <button type="button" class="btn btn-danger">Unknown</button>
-                    </div>
-                </div>
-            </#list>
-        <#------------------------------------------ Pagination ------------------------------------------>
-
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
-
-        <#------------------------------------------ Pagination ------------------------------------------>
-        <#else>
-            <p>Ooops, there is no flash cards</p>
-        </#if>
+        <div id="flash_cards">
+            <#include "parts/flash-cards.ftl">
+        </div>
 
         <#------------------------------------------ Flash Card ------------------------------------------>
 
@@ -190,41 +136,12 @@
     <#------------------------------------------ Page Content ------------------------------------------>
 
 </div>
-<#--You are using slim version of jQuery. It Doesn't support ajax Calling. Use-->
-<#--<script src="/static/js/jquery.min.js"></script>-->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script src="/static/js/jquery-3.5.1.min.js"></script>
 <script src="/static/js/popper.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/main.js"></script>
-<script>
-    function deleteRequest(id) {
-        $.ajax({
-            url: 'http://localhost:8080/card',
-            method: 'delete',
-            data: {
-                id: id
-            },
-            success: function (data) {
-                // if (data.hasOwnProperty('success')) {
-                console.log("data was sent!");
+<script src="/static/js/cards.js"></script>
 
-                // if (reload_on_return) {
-                //     setTimeout(
-                //         function()
-                //         {
-                //             location.reload();
-                //         }, 0001);
-                // }
-            },
-            error: function () {
-                console.log("Data didn't get sent!!");
-            }
-        });
-    }
-
-    function aliveFunc() {
-        alert("Its alive!");
-    }
-</script>
 </body>
 </html>
