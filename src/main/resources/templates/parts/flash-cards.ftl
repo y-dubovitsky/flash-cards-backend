@@ -1,3 +1,9 @@
+<div>
+    <#if errors??>
+        <h1>Validation Error!</h1>
+    </#if>
+</div>
+
 <#if cards?has_content>
     <#list cards as card>
         <div class="card text-center mt-2 mb-2">

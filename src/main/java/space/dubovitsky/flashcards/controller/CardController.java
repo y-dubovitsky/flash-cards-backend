@@ -2,13 +2,17 @@ package space.dubovitsky.flashcards.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import space.dubovitsky.flashcards.model.Card;
 import space.dubovitsky.flashcards.service.CardService;
 
+import javax.validation.Valid;
 import java.io.*;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/card")
@@ -36,11 +40,21 @@ public class CardController {
      */
     @PostMapping("/text")
     public String addFromTextInput(
-            @RequestParam(required = false) String front,
-            @RequestParam(required = false) String back,
+            @Valid Card card,
+            BindingResult bindingResult,
             Model model
     ) {
-        Card card = new Card(front, back); //TODO Добавить в модель количество или сами созданные карточки?
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = bindingResult.getAllErrors()
+                    .stream()
+                    .collect(Collectors.toMap(
+                            objectError -> objectError.getObjectName() + Math.random() + "Error", //TODO Key duplicate!
+                            objectError -> objectError.getDefaultMessage()
+                            )
+                    );
+            model.addAttribute("errors", "Validation Error");
+            return "parts/flash-cards"; //TODO Ошибка валидации пробрасывается, но нужно учесть ее на вью
+        }
         cardService.save(card);
 
         this.findAll(model); //TODO Нужно поправить? Потому что он всю страницу перезагружает, а нужно только добавить 1 элемент
