@@ -27,12 +27,12 @@ public class CardController {
     /**
      * Return all flashCards
      */
-    @GetMapping("/all")
+    @GetMapping()
     public String findAll(Model model) {
         List<Card> all = cardService.findAll();
 
         model.addAttribute("cards", all);
-        return "cards";
+        return "card";
     }
 
     /**
@@ -53,6 +53,7 @@ public class CardController {
                             )
                     );
             model.addAttribute("errors", "Validation Error");
+            this.findAll(model);
             return "parts/flash-cards"; //TODO Ошибка валидации пробрасывается, но нужно учесть ее на вью
         }
         cardService.save(card);
@@ -71,11 +72,11 @@ public class CardController {
     ) throws IOException {
         if (!file.isEmpty()) {
             cardService.createCardsFromTextFile(file);
-            return "cards";
+            return "card";
         }
 
         model.addAttribute("cards", "File is empty, sorry"); //TODO Если файл пустой
-        return "cards";
+        return "card";
     }
 
     /**
