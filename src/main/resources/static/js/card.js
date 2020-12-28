@@ -2,7 +2,8 @@
  * Delete flashCard by id.
  * @param id - flashCard id.
  */
-function deleteCardRequest(id) {
+function deleteCardRequest(id) { //TODO Нужно реализовать отправку _csrf токена!
+
     $.ajax({
         url: 'http://localhost:8080/card', //TODO Можно вынести в отдельный файл или типа того?
         method: 'DELETE',
@@ -20,14 +21,15 @@ function deleteCardRequest(id) {
     });
 }
 
-function addCardTextInputRequest(front, back) {
+function addCardTextInputRequest(front, back, _csrf) {
 
     $.ajax({
         url: 'http://localhost:8080/card/text',
         method: 'POST',
         data: {
             front: front,
-            back: back
+            back: back,
+            _csrf: _csrf
         },
         success: function (data) {
             console.log(data);
@@ -51,6 +53,7 @@ function editCardRequest(id) {
 
     let front = formData.get("front");
     let back = formData.get("back");
+    let _csrf = formData.get("_csrf");
 
     // Display the key/value pairs
     // for (const pair of formData.entries()) {
@@ -64,7 +67,8 @@ function editCardRequest(id) {
         data: {
             id: id,
             front: front,
-            back: back
+            back: back,
+            _csrf: _csrf
         },
         success: function(data) {
             console.log(data);

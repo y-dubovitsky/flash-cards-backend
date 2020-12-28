@@ -42,12 +42,14 @@
                             <div class="col-sm-10">
                                 <input type="text" name="back" class="form-control" id="inputBackSideText${card.id}"
                                        placeholder="${card.back}">
+                                <#--                                CSRF TOKEN-->
+                                <input type="hidden" name="_csrf" value="${_csrf.token}">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Create</button>
+                        <button type="submit" class="btn btn-success">Save</button>
                     </div>
                 </form>
             </div>

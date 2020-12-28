@@ -18,7 +18,7 @@
 
                         <#--                        Edit Card Modal-->
 
-                        <@editCardModal.editCard card></@editCardModal.editCard>
+                        <@editCardModal.editCard card/>
 
                         <#--                        Edit Card Modal-->
 

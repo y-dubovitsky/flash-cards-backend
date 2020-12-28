@@ -24,22 +24,23 @@
 
                 <!-- Form Box -->
                 <div class="col-sm-6 form">
-
                     <!-- Login Form -->
                     <div class="login form-peice switched">
-                        <form class="login-form" action="#" method="post">
+                        <form class="login-form" action="/login" method="post">
                             <div class="form-group">
-                                <label for="loginemail">Email Adderss</label>
-                                <input type="email" name="loginemail" id="loginemail" required>
+                                <label for="usernameLogin">Username</label>
+                                <input type="text" name="username" id="usernameLogin" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="loginPassword">Password</label>
-                                <input type="password" name="loginPassword" id="loginPassword" required>
+                                <label for="passwordLogin">Password</label>
+                                <input type="password" name="password" id="passwordLogin" required>
+                                <#--                                CSRF TOKEN-->
+                                <input type="hidden" name="_csrf" value="${_csrf.token}">
                             </div>
 
                             <div class="CTA">
-                                <input type="submit" value="Login">
+                                <input type="submit" value="Sign In">
                                 <a href="#" class="switch">I'm New</a>
                             </div>
                         </form>
@@ -98,4 +99,3 @@
 
     </div>
 </@index.page>
-

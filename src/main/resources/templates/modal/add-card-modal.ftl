@@ -16,7 +16,8 @@
             <form
                     action="javascript:addCardTextInputRequest(
                                             $('input[name=front]').val(),
-                                            $('input[name=back]').val()
+                                            $('input[name=back]').val(),
+                                            $('input[name=_csrf]').val(),
                                     );"
                     method="post"
                     enctype="multipart/form-data"
@@ -44,6 +45,8 @@
                         <label for="inputBackSideText" class="col-sm-2 col-form-label">Back Side: </label>
                         <div class="col-sm-10">
                             <input type="text" name="back" class="form-control" id="inputBackSideText" placeholder="back page text...">
+                            <#--                                CSRF TOKEN-->
+                            <input type="hidden" name="_csrf" value="${_csrf.token}">
                         </div>
                     </div>
                 </div>
