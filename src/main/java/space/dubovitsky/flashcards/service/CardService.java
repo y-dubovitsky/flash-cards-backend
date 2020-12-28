@@ -96,4 +96,18 @@ public class CardService {
 
         return cards;
     }
+
+    /**
+     * Edit card
+     * @param card - new card
+     */
+    public Card editCard(Card card) {
+        Optional<Card> byId = cardRepository.findById(card.getId());
+        if (byId.isPresent()) { //TODO ПЕределать эту конструкцию+
+            cardRepository.save(card);
+            return card;
+        } else {
+            return null;
+        }
+    }
 }

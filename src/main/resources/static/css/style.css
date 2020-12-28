@@ -57,7 +57,15 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fafafa; }
+  background-color: #fafafa;
+  /*background: url('/static/images/sky-690293_1920.jpg') no-repeat !important;*/
+  /*background-size: cover !important; !* Фон занимает всю доступную площадь *!*/
+  /*opacity: 0.9; // прозрачность*/
+}
+
+/*div {*/
+/*  background: rgba(250,250,250, 0.95);*/
+/*}*/
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }

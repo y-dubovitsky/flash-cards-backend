@@ -18,7 +18,8 @@ import javax.validation.constraints.Size;
 public class Card {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "card_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_seq")
     private Long id; //TODO Почему тут не использовать примитив?
 
     @Size(min = 1)
@@ -29,15 +30,18 @@ public class Card {
     @NotBlank(message = "Please, fill the back page with some text")
     private String back;
 
+    @Column(name = "prompt")
+    private String prompt;
+
+    @Column(name = "imageName")
+    private String imageName;
+
+    @Column(name = "isLearned")
+    private Boolean isLearned;
+
     public Card(String front, String back) {
         this.front = front;
         this.back = back;
     }
-
-    private String prompt;
-
-    private String imgPath;
-
-    private Boolean learned;
 
 }

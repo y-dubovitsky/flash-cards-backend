@@ -1,7 +1,11 @@
 package space.dubovitsky.flashcards.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,7 +67,7 @@ public class CardController {
     }
 
     /**
-     * Create List of flasCards from input file.
+     * Create List of flashCards from input file.
      */
     @PostMapping("/file")
     public String addFromFile(
@@ -88,5 +92,20 @@ public class CardController {
 
         this.findAll(model);
         return "parts/flash-cards";
+    }
+
+    @PostMapping("/turn")
+    public ResponseEntity<String> turnCards(@RequestParam("id") Card card) {
+        return new ResponseEntity<>(card.getBack(), HttpStatus.OK);
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity<Card> editCard(Card card) {
+        Card saved = cardService.editCard(card);
+        if (saved != null) {
+            return new ResponseEntity<>(saved, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }
