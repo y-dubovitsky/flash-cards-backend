@@ -1,8 +1,10 @@
 package space.dubovitsky.flashcards.service;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import space.dubovitsky.flashcards.model.Card;
+import space.dubovitsky.flashcards.model.User;
 import space.dubovitsky.flashcards.model.builder.CardBuilder;
 import space.dubovitsky.flashcards.repository.CardRepository;
 
@@ -33,6 +35,14 @@ public class CardService {
      */
     public List<Card> findAll() {
         return cardRepository.findAll();
+    }
+
+    /**
+     * SEarch all cards
+     * @return
+     */
+    public List<Card> findAllByUsername(User user) {
+        return cardRepository.findAllByUser(user);
     }
 
     /**

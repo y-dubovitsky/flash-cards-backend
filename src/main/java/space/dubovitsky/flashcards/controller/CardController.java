@@ -1,19 +1,21 @@
 package space.dubovitsky.flashcards.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import space.dubovitsky.flashcards.model.Card;
 import space.dubovitsky.flashcards.service.CardService;
+import space.dubovitsky.flashcards.service.UserService;
 
 import javax.validation.Valid;
-import java.io.*;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,19 +25,24 @@ import java.util.stream.Collectors;
 public class CardController {
 
     private final CardService cardService;
+    private final UserService userService;
 
-    public CardController(CardService cardService) {
+    public CardController(CardService cardService, UserService userService) {
         this.cardService = cardService;
+        this.userService = userService;
     }
 
     /**
      * Return all flashCards
      */
     @GetMapping()
-    public String findAll(Model model) {
-        List<Card> all = cardService.findAll();
+    public String findAllByUsername(Model model) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        List<Card> all = cardService.findAllByUsername(userService.findByUsername(principal.getUsername()));
 
         model.addAttribute("cards", all);
+        model.addAttribute("user", principal);
         return "card";
     }
 
@@ -44,6 +51,7 @@ public class CardController {
      */
     @PostMapping("/text")
     public String addFromTextInput(
+            AuthenticatedPrincipal principal,
             @Valid Card card,
             BindingResult bindingResult,
             Model model
@@ -57,12 +65,13 @@ public class CardController {
                             )
                     );
             model.addAttribute("errors", "Validation Error");
-            this.findAll(model);
+            this.findAllByUsername(model);
             return "parts/flash-cards"; //TODO Ошибка валидации пробрасывается, но нужно учесть ее на вью
-        }
+        } //TODO Все переделать
+        card.setUser(userService.findByUsername(principal.getName()));
         cardService.save(card);
 
-        this.findAll(model); //TODO Нужно поправить? Потому что он всю страницу перезагружает, а нужно только добавить 1 элемент
+        this.findAllByUsername(model); //TODO Нужно поправить? Потому что он всю страницу перезагружает, а нужно только добавить 1 элемент
         return "parts/flash-cards";
     }
 
@@ -90,7 +99,7 @@ public class CardController {
     public String delete(@RequestParam Long id, Model model) {
         cardService.delete(id);
 
-        this.findAll(model);
+        this.findAllByUsername(model);
         return "parts/flash-cards";
     }
 

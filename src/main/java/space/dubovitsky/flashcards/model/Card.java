@@ -39,6 +39,10 @@ public class Card {
     @Column(name = "isLearned")
     private Boolean isLearned;
 
+    @JoinColumn(name = "user_id")
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    private User user;
+
     public Card(String front, String back) {
         this.front = front;
         this.back = back;
