@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-@Table(name = "card")
+@Table(name = "card_table")
 public class Card {
 
     @Id

@@ -1,4 +1,4 @@
-insert into USER (
+insert into user_table (
     ID,
     USERNAME,
     EMAIL,
