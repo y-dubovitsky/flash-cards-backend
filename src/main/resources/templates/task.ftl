@@ -1,7 +1,7 @@
 <#import "parts/index.ftl" as index>
 <#import "parts/navbar.ftl" as navbar>
 
-<@index.page "Task" "/static/css/style.css" "">
+<@index.page "Task" "/static/css/style.css" "/static/js/task.js">
     <#include "parts/sidebar.ftl">
     <div id="content" class="p-4 p-md-5">
 
@@ -30,7 +30,7 @@
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
 
-        <#if tasks??>
+        <#if tasks?has_content>
             <#list tasks as task>
                 <table class="table table-bordered mt-5">
                     <thead>
@@ -39,6 +39,7 @@
                         <th scope="col">Status</th>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -52,6 +53,21 @@
                         </td>
                         <td>${task.name}</td>
                         <td>${task.description}</td>
+                        <td>
+                            <ul class="nav nav-pills card-header-pills">
+                                <li class="nav-item">
+                                    <a class="nav-link fa fa-check-square-o" href="#"></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a onclick="deleteTaskRequest(${task.id})"
+                                       class="nav-link fa fa-trash-o"
+                                       tabindex="-1"
+                                       aria-disabled="true"
+                                    >
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

@@ -14,13 +14,9 @@
                 </button>
             </div>
             <form
-                    action="javascript:addCardTextInputRequest(
-                                            $('input[name=front]').val(),
-                                            $('input[name=back]').val(),
-                                            $('input[name=_csrf]').val(),
-                                    );"
-                    method="post"
-                    enctype="multipart/form-data"
+                action="javascript:addCardTextInputRequest($('input[name=front]').val(), $('input[name=back]').val());"
+                method="post"
+                enctype="multipart/form-data"
             >
                 <div class="modal-body">
                     <div class="form-group row">

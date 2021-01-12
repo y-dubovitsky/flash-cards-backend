@@ -4,11 +4,14 @@
  */
 function deleteCardRequest(id) { //TODO Нужно реализовать отправку _csrf токена!
 
+    var token = $("meta[name='_csrf']").attr("content");
+
     $.ajax({
         url: 'http://localhost:8080/card', //TODO Можно вынести в отдельный файл или типа того?
         method: 'DELETE',
         data: {
-            id: id
+            id: id,
+            _csrf: token
         },
         success: function (data) {
             console.log(data);
@@ -21,7 +24,9 @@ function deleteCardRequest(id) { //TODO Нужно реализовать отп
     });
 }
 
-function addCardTextInputRequest(front, back, _csrf) {
+function addCardTextInputRequest(front, back) {
+
+    var token = $("meta[name='_csrf']").attr("content");
 
     $.ajax({
         url: 'http://localhost:8080/card/text',
@@ -29,7 +34,7 @@ function addCardTextInputRequest(front, back, _csrf) {
         data: {
             front: front,
             back: back,
-            _csrf: _csrf
+            _csrf: token
         },
         success: function (data) {
             console.log(data);
