@@ -40,7 +40,7 @@ public class Card {
     private Boolean isLearned;
 
     @JoinColumn(name = "user_id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne()
     private User user;
 
     public Card(String front, String back) {

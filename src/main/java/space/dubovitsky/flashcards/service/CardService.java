@@ -38,10 +38,11 @@ public class CardService {
     }
 
     /**
-     * SEarch all cards
+     * Search all user`s card
+     * User - current user.
      * @return
      */
-    public List<Card> findAllByUsername(User user) {
+    public List<Card> findAllByUser(User user) {
         return cardRepository.findAllByUser(user);
     }
 
