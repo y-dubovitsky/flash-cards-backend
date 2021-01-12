@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary fa fa-plus ml-2" data-toggle="modal"
+<button type="button" class="btn btn-primary fa fa-sticky-note ml-2" data-toggle="modal"
         data-target="#addCardModal">
 </button>
 

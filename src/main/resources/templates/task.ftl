@@ -1,12 +1,15 @@
 <#import "parts/index.ftl" as index>
+<#import "parts/navbar.ftl" as navbar>
 
 <@index.page "Task" "/static/css/style.css" "">
     <#include "parts/sidebar.ftl">
     <div id="content" class="p-4 p-md-5">
 
-        <#include "parts/navbar.ftl">
+        <@navbar.navbar>
+            <button class="btn btn-primary fa fa-check ml-2" type="button" data-toggle="collapse" data-target="#addTaskForm" aria-expanded="false" aria-controls="collapseExample"/>
+        </@navbar.navbar>
 
-        <form action="/task/add" method="post">
+        <form action="/task/add" method="post" id="addTaskForm" class="collapse">
             <div class="form-group">
                 <label for="taskText">Name</label>
                 <input type="text" class="form-control" name="name" id="taskText" placeholder="Enter name of task">
