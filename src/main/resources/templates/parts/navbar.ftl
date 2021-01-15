@@ -27,13 +27,16 @@
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li>
-                        <form class="nav-item" id="logout" method="post" action="/logout">
-                            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-                            <input class="nav-link nav-item" type="submit" value="Logout"/>
-                        </form>
+<#--                        <form class="nav-item" id="logout" method="post" action="/logout">-->
+<#--                            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>-->
+<#--                            <input class="nav-link nav-item" type="submit" value="Logout"/>-->
+<#--                        </form>-->
+                        <a onclick="logout()" class="nav-link">Logout</a>
+
                     </li>
                 </ul>
             </div>
         </div>
+        <script src="js/logout.js"></script>
     </nav>
 </#macro>
